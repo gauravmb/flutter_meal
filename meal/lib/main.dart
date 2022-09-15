@@ -1,9 +1,8 @@
-import 'dart:ui';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:meal/categories_screen.dart';
-import 'package:meal/models/category_model.dart';
+import 'package:meal/screens/categories_screen.dart';
+import 'package:meal/screens/category_meals.dart';
+import 'package:meal/screens/meal_details_screen.dart';
+import 'package:meal/screens/tabs_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +35,14 @@ class MyApp extends StatelessWidget {
               ),
             ),
       ),
-      home: CategoriesScreen(),
+      // home: CategoriesScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (ctx) => TabsScreen(),
+        CategoriesScreen.routeName: (ctx) => CategoriesScreen(),
+        CategoryMeals.routeName: (ctx) => CategoryMeals(),
+        MealDetailsScreen.routeName: (ctx) => MealDetailsScreen()
+      },
     );
   }
 }
