@@ -3,7 +3,7 @@ import '../widgets/category_item.dart';
 import '../dummy_data.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  static String routeName = "/CategoriesScreen";
+  static String routeName = "/categories-screen";
   @override
   Widget build(BuildContext context) {
     return GridView(

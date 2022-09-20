@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal/screens/categories_screen.dart';
 import 'package:meal/screens/category_meals.dart';
+import 'package:meal/screens/filter_screen.dart';
 import 'package:meal/screens/meal_details_screen.dart';
 import 'package:meal/screens/tabs_screen.dart';
 
@@ -8,10 +9,30 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+
+  Map<String, bool> _filters = {
+    'gluten': true,
+    'lactose': false,
+    'vegan': false,
+    'vegetarian': false
+  };
+
+  void setFitters(Map<String, bool> filterData) {
+    setState(() {
+      debugPrint('Filterssss in Main $filterData');
+      _filters = filterData;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,8 +61,12 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (ctx) => TabsScreen(),
         CategoriesScreen.routeName: (ctx) => CategoriesScreen(),
-        CategoryMeals.routeName: (ctx) => CategoryMeals(),
-        MealDetailsScreen.routeName: (ctx) => MealDetailsScreen()
+        CategoryMeals.routeName: (ctx) => CategoryMeals(filters: _filters),
+        MealDetailsScreen.routeName: (ctx) => MealDetailsScreen(),
+        FilterScreen.routeName: (ctx) => FilterScreen(
+              filters: _filters,
+              saveFilters: setFitters,
+            )
       },
     );
   }

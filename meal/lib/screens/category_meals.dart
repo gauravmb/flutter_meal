@@ -5,13 +5,26 @@ import '../widgets/meal_item.dart';
 
 class CategoryMeals extends StatelessWidget {
   static String routeName = "/category-meal";
+  Map<String, bool> filters;
+  CategoryMeals({required this.filters});
   @override
   Widget build(BuildContext context) {
     final Map arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, String>;
-    final meals = DUMMY_MEALS
-        .where((meal) => meal.categories.contains(arguments["id"]))
-        .toList();
+
+    final meals = DUMMY_MEALS.where((meal) {
+      if ((filters['gluten'] as bool) && !meal.isGlutenFree) {
+        return false;
+      } else if ((filters['lactose'] as bool) && !meal.isLactoseFree) {
+        return false;
+      } else if ((filters['vegan'] as bool) && !meal.isVegan) {
+        return false;
+      } else if ((filters['vegetarian'] as bool) && !meal.isVegetarian) {
+        return false;
+      }
+
+      return meal.categories.contains(arguments["id"]);
+    }).toList();
     return Scaffold(
       appBar: AppBar(
         title: Text(arguments["title"]),
